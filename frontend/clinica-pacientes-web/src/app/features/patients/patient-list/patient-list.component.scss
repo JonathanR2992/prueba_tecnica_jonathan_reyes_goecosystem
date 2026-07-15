@@ -1,0 +1,235 @@
+:host {
+  display: block;
+}
+
+.patients-page {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-eyebrow {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #117174;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #183153;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.page-header p {
+  margin: 0.5rem 0 0;
+  color: #708096;
+}
+
+.create-button {
+  background: #116466;
+  color: #ffffff;
+}
+
+.filters-card,
+.table-card {
+  border: 1px solid #dce5ef;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgb(29 55 85 / 7%);
+}
+
+.filters-grid {
+  display: grid;
+  grid-template-columns:
+    minmax(220px, 1.5fr)
+    repeat(3, minmax(150px, 1fr))
+    auto;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.filters-grid mat-form-field {
+  width: 100%;
+}
+
+.filter-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-self: start;
+  padding-top: 0.25rem;
+}
+
+.table-card mat-card-content {
+  padding: 0;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 980px;
+}
+
+th {
+  color: #586a80;
+  font-weight: 700;
+}
+
+td {
+  color: #34475d;
+}
+
+.patient-cell {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.patient-cell strong {
+  color: #183153;
+}
+
+.patient-cell span {
+  color: #8290a2;
+  font-size: 0.8rem;
+}
+
+.badge {
+  display: inline-flex;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.priority-alta {
+  background: #fee9e7;
+  color: #a33429;
+}
+
+.priority-media {
+  background: #fff1d5;
+  color: #966000;
+}
+
+.priority-baja {
+  background: #e7f5eb;
+  color: #26723d;
+}
+
+.status-pendiente {
+  background: #fff1d5;
+  color: #966000;
+}
+
+.status-en-atencion {
+  background: #e5efff;
+  color: #315eaa;
+}
+
+.status-atendido {
+  background: #e7f5eb;
+  color: #26723d;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.delete-button {
+  color: #b42318;
+}
+
+.loading-state,
+.empty-state {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  align-content: center;
+  gap: 0.75rem;
+  color: #718197;
+  text-align: center;
+}
+
+.empty-state mat-icon {
+  width: 52px;
+  height: 52px;
+  color: #8ea1b5;
+  font-size: 52px;
+}
+
+.empty-state strong {
+  color: #34475d;
+  font-size: 1.05rem;
+}
+
+.empty-state p {
+  margin: 0;
+}
+
+.error-state {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 140px;
+  padding: 1.5rem;
+  background: #fff5f4;
+}
+
+.error-state mat-icon {
+  color: #b42318;
+}
+
+.error-state div {
+  flex: 1;
+}
+
+.error-state strong {
+  color: #842c24;
+}
+
+.error-state p {
+  margin: 0.25rem 0 0;
+  color: #98564f;
+}
+
+@media (max-width: 1200px) {
+  .filters-grid {
+    grid-template-columns:
+      repeat(2, minmax(200px, 1fr));
+  }
+
+  .filter-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .create-button {
+    width: 100%;
+  }
+
+  .filters-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}

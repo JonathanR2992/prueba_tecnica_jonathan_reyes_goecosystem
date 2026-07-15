@@ -1,1 +1,237 @@
-<p>dashboard works!</p>
+<section class="dashboard-page">
+  <header class="page-header">
+    <div>
+      <span class="page-eyebrow">
+        Resumen operativo
+      </span>
+
+      <h1>
+        Dashboard
+      </h1>
+
+      <p>
+        Consulta el estado general de los pacientes y
+        los casos que requieren mayor atención.
+      </p>
+    </div>
+
+    <button
+      mat-stroked-button
+      type="button"
+      [disabled]="isLoading"
+      (click)="loadIndicators()"
+    >
+      <mat-icon>
+        refresh
+      </mat-icon>
+
+      Actualizar
+    </button>
+  </header>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-spinner diameter="48" />
+
+      <span>
+        Cargando indicadores...
+      </span>
+    </div>
+  } @else if (errorMessage) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <mat-icon>
+          error_outline
+        </mat-icon>
+
+        <div>
+          <strong>
+            No fue posible cargar el dashboard
+          </strong>
+
+          <p>
+            {{ errorMessage }}
+          </p>
+        </div>
+
+        <button
+          mat-flat-button
+          type="button"
+          (click)="loadIndicators()"
+        >
+          Reintentar
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="indicator-grid">
+      @for (card of cards; track card.label) {
+        <mat-card
+          class="indicator-card"
+          [ngClass]="card.className"
+        >
+          <mat-card-content>
+            <div class="indicator-header">
+              <div class="indicator-icon">
+                <mat-icon>
+                  {{ card.icon }}
+                </mat-icon>
+              </div>
+
+              <span class="indicator-label">
+                {{ card.label }}
+              </span>
+            </div>
+
+            <strong class="indicator-value">
+              {{ card.value }}
+            </strong>
+
+            <p class="indicator-description">
+              {{ card.description }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+
+    <section class="operational-summary">
+      <mat-card>
+        <mat-card-header>
+          <div
+            mat-card-avatar
+            class="summary-avatar"
+          >
+            <mat-icon>
+              insights
+            </mat-icon>
+          </div>
+
+          <mat-card-title>
+            Resumen de atención
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Distribución general de los pacientes
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          @if (indicators; as data) {
+            <div class="summary-row">
+              <span>
+                Pendientes
+              </span>
+
+              <strong>
+                {{ data.pacientes_pendientes }}
+              </strong>
+            </div>
+
+            <div class="summary-bar">
+              <div
+                class="summary-progress pending"
+                [style.width.%]="
+                  data.total_pacientes
+                    ? (
+                        data.pacientes_pendientes
+                        / data.total_pacientes
+                      ) * 100
+                    : 0
+                "
+              ></div>
+            </div>
+
+            <div class="summary-row">
+              <span>
+                En atención
+              </span>
+
+              <strong>
+                {{ data.pacientes_en_atencion }}
+              </strong>
+            </div>
+
+            <div class="summary-bar">
+              <div
+                class="summary-progress attention"
+                [style.width.%]="
+                  data.total_pacientes
+                    ? (
+                        data.pacientes_en_atencion
+                        / data.total_pacientes
+                      ) * 100
+                    : 0
+                "
+              ></div>
+            </div>
+
+            <div class="summary-row">
+              <span>
+                Atendidos
+              </span>
+
+              <strong>
+                {{ data.pacientes_atendidos }}
+              </strong>
+            </div>
+
+            <div class="summary-bar">
+              <div
+                class="summary-progress attended"
+                [style.width.%]="
+                  data.total_pacientes
+                    ? (
+                        data.pacientes_atendidos
+                        / data.total_pacientes
+                      ) * 100
+                    : 0
+                "
+              ></div>
+            </div>
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="priority-summary-card">
+        <mat-card-header>
+          <div
+            mat-card-avatar
+            class="summary-avatar priority"
+          >
+            <mat-icon>
+              emergency
+            </mat-icon>
+          </div>
+
+          <mat-card-title>
+            Atención prioritaria
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Casos que requieren seguimiento inmediato
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          @if (indicators; as data) {
+            <div class="priority-highlight">
+              <strong>
+                {{ data.pendientes_prioridad_alta }}
+              </strong>
+
+              <span>
+                pacientes pendientes con prioridad alta
+              </span>
+            </div>
+
+            <p>
+              Este indicador combina el estado pendiente
+              con el nivel de prioridad alta.
+            </p>
+          }
+        </mat-card-content>
+      </mat-card>
+    </section>
+  }
+</section>

@@ -1,0 +1,257 @@
+:host {
+  display: block;
+}
+
+.patient-form-page {
+  display: grid;
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  gap: 1.25rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-eyebrow {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #117174;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #183153;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.page-header p {
+  max-width: 46rem;
+  margin: 0.5rem 0 0;
+  color: #708096;
+  line-height: 1.6;
+}
+
+.page-header > a {
+  flex-shrink: 0;
+}
+
+.page-header > a mat-icon {
+  margin-right: 0.35rem;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-card {
+  overflow: hidden;
+  border: 1px solid #dce5ef;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgb(29 55 85 / 7%);
+}
+
+.form-card mat-card-header {
+  padding: 1.25rem 1.25rem 0;
+}
+
+.form-card mat-card-content {
+  padding: 1.5rem 1.25rem 1.25rem;
+}
+
+.section-avatar {
+  display: grid;
+  place-items: center;
+  background: #e4f3f4;
+  color: #116466;
+}
+
+.section-avatar.contact {
+  background: #e8effd;
+  color: #3d64a1;
+}
+
+.section-avatar.assistance {
+  background: #e9f5eb;
+  color: #34784a;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+}
+
+.form-grid.three-columns {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.general-error {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid #efb6b0;
+  border-radius: 0.75rem;
+  background: #fff5f4;
+  color: #8a3028;
+}
+
+.general-error mat-icon {
+  flex-shrink: 0;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding: 0.75rem 0 2rem;
+}
+
+.form-actions button {
+  min-height: 40px;
+}
+
+.save-button {
+  display: inline-flex;
+  min-width: 190px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #116466;
+  color: #ffffff;
+}
+
+.save-button:not(:disabled):hover {
+  background: #0d5658;
+}
+
+.save-button:disabled {
+  opacity: 0.7;
+}
+
+.save-button mat-icon {
+  margin: 0;
+}
+
+.button-spinner {
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.button-spinner ::ng-deep circle {
+  stroke: currentColor;
+}
+
+.loading-state {
+  display: grid;
+  min-height: 340px;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  color: #718197;
+}
+
+.error-card {
+  border: 1px solid #efb6b0;
+  border-radius: 1rem;
+  background: #fff5f4;
+}
+
+.error-card mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.error-card mat-icon {
+  flex-shrink: 0;
+  color: #b42318;
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-card strong {
+  color: #842c24;
+}
+
+.error-card p {
+  margin: 0.25rem 0 0;
+  color: #98564f;
+  line-height: 1.5;
+}
+
+@media (max-width: 850px) {
+  .form-grid,
+  .form-grid.three-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .page-header > a {
+    width: 100%;
+  }
+
+  .form-card mat-card-header {
+    padding: 1rem 1rem 0;
+  }
+
+  .form-card mat-card-content {
+    padding: 1.25rem 1rem 1rem;
+  }
+
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+
+  .save-button {
+    grid-row: 1;
+  }
+
+  .error-card mat-card-content {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .error-card button {
+    width: 100%;
+  }
+}

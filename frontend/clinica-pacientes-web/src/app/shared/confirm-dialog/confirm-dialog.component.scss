@@ -1,0 +1,20 @@
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+h2 mat-icon {
+  color: #b42318;
+}
+
+mat-dialog-content p {
+  margin: 0;
+  color: #596a7f;
+  line-height: 1.6;
+}
+
+.confirm-button {
+  background: #b42318;
+  color: #ffffff;
+}

@@ -1,0 +1,286 @@
+:host {
+  display: block;
+}
+
+.dashboard-page {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-eyebrow {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: #117174;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.page-header h1 {
+  margin: 0;
+  color: #183153;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.page-header p {
+  max-width: 46rem;
+  margin: 0.6rem 0 0;
+  color: #708096;
+  line-height: 1.6;
+}
+
+.indicator-grid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.indicator-card {
+  border: 1px solid #dce5ef;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgb(29 55 85 / 7%);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.indicator-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgb(29 55 85 / 11%);
+}
+
+.indicator-card mat-card-content {
+  padding: 1.25rem;
+}
+
+.indicator-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.indicator-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 12px;
+}
+
+.indicator-label {
+  color: #506178;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.indicator-value {
+  display: block;
+  margin-top: 1.2rem;
+  color: #183153;
+  font-size: 2.35rem;
+  line-height: 1;
+}
+
+.indicator-description {
+  margin: 0.65rem 0 0;
+  color: #8190a3;
+  font-size: 0.83rem;
+  line-height: 1.45;
+}
+
+.card-total .indicator-icon {
+  background: #e4f3f4;
+  color: #0f686b;
+}
+
+.card-pending .indicator-icon {
+  background: #fff2d8;
+  color: #a05b00;
+}
+
+.card-attention .indicator-icon {
+  background: #e5efff;
+  color: #315eaa;
+}
+
+.card-attended .indicator-icon {
+  background: #e6f6eb;
+  color: #277542;
+}
+
+.card-priority .indicator-icon {
+  background: #ffebe8;
+  color: #a93b2e;
+}
+
+.card-critical .indicator-icon {
+  background: #f8e7ef;
+  color: #9a2e5a;
+}
+
+.operational-summary {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.5fr) minmax(280px, 1fr);
+  gap: 1rem;
+}
+
+.operational-summary mat-card {
+  border: 1px solid #dce5ef;
+  border-radius: 1rem;
+  box-shadow: 0 8px 24px rgb(29 55 85 / 7%);
+}
+
+.operational-summary mat-card-content {
+  padding-top: 1rem;
+}
+
+.summary-avatar {
+  display: grid;
+  place-items: center;
+  background: #e4f3f4;
+  color: #116466;
+}
+
+.summary-avatar.priority {
+  background: #ffebe8;
+  color: #a93b2e;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  color: #4f6075;
+}
+
+.summary-row strong {
+  color: #183153;
+}
+
+.summary-bar {
+  overflow: hidden;
+  height: 8px;
+  margin-top: 0.45rem;
+  border-radius: 999px;
+  background: #edf1f6;
+}
+
+.summary-progress {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+.summary-progress.pending {
+  background: #d99a2b;
+}
+
+.summary-progress.attention {
+  background: #4c79c2;
+}
+
+.summary-progress.attended {
+  background: #3d9659;
+}
+
+.priority-highlight {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.priority-highlight strong {
+  color: #a93b2e;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.priority-highlight span {
+  max-width: 14rem;
+  color: #53657b;
+  line-height: 1.45;
+}
+
+.priority-summary-card p {
+  color: #7a899d;
+  line-height: 1.55;
+}
+
+.loading-state {
+  display: grid;
+  min-height: 300px;
+  place-items: center;
+  align-content: center;
+  gap: 1rem;
+  color: #6f8095;
+}
+
+.error-card {
+  border: 1px solid #efb6b0;
+  background: #fff5f4;
+}
+
+.error-card mat-card-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.error-card mat-icon {
+  color: #b13d31;
+}
+
+.error-card div {
+  flex: 1;
+}
+
+.error-card strong {
+  color: #832c24;
+}
+
+.error-card p {
+  margin: 0.25rem 0 0;
+  color: #98564f;
+}
+
+@media (max-width: 1100px) {
+  .indicator-grid {
+    grid-template-columns:
+      repeat(2, minmax(220px, 1fr));
+  }
+
+  .operational-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .page-header {
+    flex-direction: column;
+  }
+
+  .indicator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .page-header button {
+    width: 100%;
+  }
+
+  .error-card mat-card-content {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}

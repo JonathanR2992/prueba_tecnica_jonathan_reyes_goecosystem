@@ -1,1 +1,739 @@
-<p>patient-form works!</p>
+<section class="patient-form-page">
+  <header class="page-header">
+    <div>
+      <span class="page-eyebrow">
+        Gestión asistencial
+      </span>
+
+      <h1>
+        {{ pageTitle }}
+      </h1>
+
+      <p>
+        {{ pageDescription }}
+      </p>
+    </div>
+
+    <a
+      mat-stroked-button
+      routerLink="/patients"
+    >
+      <mat-icon>arrow_back</mat-icon>
+      <span>Volver al listado</span>
+    </a>
+  </header>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-spinner diameter="48"></mat-spinner>
+
+      <span>
+        Cargando información...
+      </span>
+    </div>
+  } @else if (loadErrorMessage) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <mat-icon>error_outline</mat-icon>
+
+        <div class="error-content">
+          <strong>
+            No fue posible cargar el formulario
+          </strong>
+
+          <p>
+            {{ loadErrorMessage }}
+          </p>
+        </div>
+
+        <button
+          mat-flat-button
+          type="button"
+          (click)="retryLoad()"
+        >
+          Reintentar
+        </button>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <form
+      [formGroup]="patientForm"
+      (ngSubmit)="submit()"
+      novalidate
+    >
+      <mat-card class="form-card">
+        <mat-card-header>
+          <div
+            mat-card-avatar
+            class="section-avatar"
+          >
+            <mat-icon>badge</mat-icon>
+          </div>
+
+          <mat-card-title>
+            Información personal
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Datos básicos de identificación del paciente
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Tipo de documento
+              </mat-label>
+
+              <mat-select
+                formControlName="tipo_documento"
+              >
+                @for (
+                  documentType
+                  of catalogs?.tipos_documento ?? [];
+                  track documentType.codigo
+                ) {
+                  <mat-option
+                    [value]="documentType.codigo"
+                  >
+                    {{ documentType.codigo }} -
+                    {{ documentType.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (
+                hasError(
+                  'tipo_documento',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El tipo de documento es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'tipo_documento',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .tipo_documento
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Número de documento
+              </mat-label>
+
+              <input
+                matInput
+                type="text"
+                formControlName="documento"
+                maxlength="20"
+                autocomplete="off"
+              >
+
+              <mat-hint align="end">
+                {{
+                  patientForm.controls
+                    .documento.value.length
+                }}/20
+              </mat-hint>
+
+              @if (
+                hasError(
+                  'documento',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El documento es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'documento',
+                  'minlength'
+                )
+              ) {
+                <mat-error>
+                  El documento debe tener al menos
+                  3 caracteres.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'documento',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .documento
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              class="full-width"
+            >
+              <mat-label>
+                Nombre completo
+              </mat-label>
+
+              <input
+                matInput
+                type="text"
+                formControlName="nombre_completo"
+                maxlength="150"
+                autocomplete="name"
+              >
+
+              <mat-hint align="end">
+                {{
+                  patientForm.controls
+                    .nombre_completo.value.length
+                }}/150
+              </mat-hint>
+
+              @if (
+                hasError(
+                  'nombre_completo',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El nombre completo es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'nombre_completo',
+                  'minlength'
+                )
+              ) {
+                <mat-error>
+                  El nombre debe tener al menos
+                  3 caracteres.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'nombre_completo',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .nombre_completo
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Fecha de nacimiento
+              </mat-label>
+
+              <input
+                matInput
+                type="date"
+                formControlName="fecha_nacimiento"
+                [max]="maximumBirthDate"
+              >
+
+              @if (
+                hasError(
+                  'fecha_nacimiento',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  La fecha de nacimiento es obligatoria.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'fecha_nacimiento',
+                  'futureDate'
+                )
+              ) {
+                <mat-error>
+                  La fecha no puede ser futura.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'fecha_nacimiento',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .fecha_nacimiento
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Género
+              </mat-label>
+
+              <mat-select
+                formControlName="genero"
+              >
+                @for (
+                  gender
+                  of catalogs?.generos ?? [];
+                  track gender.nombre
+                ) {
+                  <mat-option
+                    [value]="gender.nombre"
+                  >
+                    {{ gender.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (
+                hasError(
+                  'genero',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El género es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'genero',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .genero
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <div
+            mat-card-avatar
+            class="section-avatar contact"
+          >
+            <mat-icon>contact_phone</mat-icon>
+          </div>
+
+          <mat-card-title>
+            Información de contacto
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            Datos para ubicación y comunicación
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="form-grid">
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Teléfono
+              </mat-label>
+
+              <mat-icon matPrefix>
+                phone
+              </mat-icon>
+
+              <input
+                matInput
+                type="tel"
+                formControlName="telefono"
+                maxlength="20"
+                autocomplete="tel"
+              >
+
+              @if (
+                hasError(
+                  'telefono',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El teléfono es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'telefono',
+                  'pattern'
+                )
+              ) {
+                <mat-error>
+                  El formato del teléfono no es válido.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'telefono',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .telefono
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Correo electrónico
+              </mat-label>
+
+              <mat-icon matPrefix>
+                email
+              </mat-icon>
+
+              <input
+                matInput
+                type="email"
+                formControlName="correo"
+                maxlength="150"
+                autocomplete="email"
+              >
+
+              <mat-hint>
+                Opcional
+              </mat-hint>
+
+              @if (
+                hasError(
+                  'correo',
+                  'email'
+                )
+              ) {
+                <mat-error>
+                  El formato del correo no es válido.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'correo',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .correo
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              class="full-width"
+            >
+              <mat-label>
+                Ciudad
+              </mat-label>
+
+              <mat-icon matPrefix>
+                location_city
+              </mat-icon>
+
+              <input
+                matInput
+                type="text"
+                formControlName="ciudad"
+                maxlength="80"
+              >
+
+              <mat-hint>
+                Opcional
+              </mat-hint>
+
+              @if (
+                hasError(
+                  'ciudad',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .ciudad
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card class="form-card">
+        <mat-card-header>
+          <div
+            mat-card-avatar
+            class="section-avatar assistance"
+          >
+            <mat-icon>medical_services</mat-icon>
+          </div>
+
+          <mat-card-title>
+            Información asistencial
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            EPS, prioridad y estado de atención
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="form-grid three-columns">
+            <mat-form-field appearance="outline">
+              <mat-label>
+                EPS
+              </mat-label>
+
+              <mat-select
+                formControlName="eps_codigo"
+              >
+                @for (
+                  eps of catalogs?.eps ?? [];
+                  track eps.eps_codigo
+                ) {
+                  <mat-option
+                    [value]="eps.eps_codigo"
+                  >
+                    {{ eps.eps_nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (
+                hasError(
+                  'eps_codigo',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  La EPS es obligatoria.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'eps_codigo',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .eps_codigo
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Prioridad
+              </mat-label>
+
+              <mat-select
+                formControlName="prioridad"
+              >
+                @for (
+                  priority
+                  of catalogs?.prioridades ?? [];
+                  track priority.nombre
+                ) {
+                  <mat-option
+                    [value]="priority.nombre"
+                  >
+                    {{ priority.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (
+                hasError(
+                  'prioridad',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  La prioridad es obligatoria.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'prioridad',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .prioridad
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>
+                Estado
+              </mat-label>
+
+              <mat-select
+                formControlName="estado"
+              >
+                @for (
+                  status
+                  of catalogs?.estados ?? [];
+                  track status.nombre
+                ) {
+                  <mat-option
+                    [value]="status.nombre"
+                  >
+                    {{ status.nombre }}
+                  </mat-option>
+                }
+              </mat-select>
+
+              @if (
+                hasError(
+                  'estado',
+                  'required'
+                )
+              ) {
+                <mat-error>
+                  El estado es obligatorio.
+                </mat-error>
+              }
+
+              @if (
+                hasError(
+                  'estado',
+                  'server'
+                )
+              ) {
+                <mat-error>
+                  {{
+                    patientForm.controls
+                      .estado
+                      .getError('server')
+                  }}
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      @if (generalErrorMessage) {
+        <div
+          class="general-error"
+          role="alert"
+        >
+          <mat-icon>error_outline</mat-icon>
+
+          <span>
+            {{ generalErrorMessage }}
+          </span>
+        </div>
+      }
+
+      <div class="form-actions">
+        <button
+          mat-stroked-button
+          type="button"
+          [disabled]="isSubmitting"
+          (click)="cancel()"
+        >
+          <span>Cancelar</span>
+        </button>
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="save-button"
+          [disabled]="isSubmitting"
+        >
+          @if (isSubmitting) {
+            <mat-spinner
+              class="button-spinner"
+              diameter="22"
+            ></mat-spinner>
+          } @else {
+            <mat-icon>save</mat-icon>
+          }
+
+          <span>
+            {{
+              isSubmitting
+                ? 'Guardando...'
+                : (
+                    isEditMode
+                      ? 'Guardar cambios'
+                      : 'Registrar paciente'
+                  )
+            }}
+          </span>
+        </button>
+      </div>
+    </form>
+  }
+</section>

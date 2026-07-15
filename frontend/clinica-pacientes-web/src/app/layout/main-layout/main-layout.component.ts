@@ -43,6 +43,7 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
 })
+
 export class MainLayoutComponent {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
@@ -65,6 +66,7 @@ export class MainLayoutComponent {
     );
 
   sidebarOpened = true;
+  isMobile = false;
 
   constructor() {
     this.isMobile$
@@ -72,6 +74,7 @@ export class MainLayoutComponent {
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((isMobile) => {
+        this.isMobile = isMobile;
         this.sidebarOpened = !isMobile;
       });
   }
@@ -80,8 +83,8 @@ export class MainLayoutComponent {
     this.sidebarOpened = !this.sidebarOpened;
   }
 
-  closeSidebarOnMobile(isMobile: boolean): void {
-    if (isMobile) {
+  closeSidebarOnMobile(): void {
+    if (this.isMobile) {
       this.sidebarOpened = false;
     }
   }

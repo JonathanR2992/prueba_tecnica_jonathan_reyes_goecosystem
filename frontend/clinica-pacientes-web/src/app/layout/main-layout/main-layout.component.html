@@ -42,11 +42,7 @@
               routerLink="/dashboard"
               routerLinkActive="active-navigation-item"
               [routerLinkActiveOptions]="{ exact: true }"
-              (click)="
-                closeSidebarOnMobile(
-                  (isMobile$ | async) ?? false
-                )
-              "
+              (click)="closeSidebarOnMobile()"
             >
               <mat-icon matListItemIcon>
                 dashboard
@@ -61,11 +57,7 @@
               mat-list-item
               routerLink="/patients"
               routerLinkActive="active-navigation-item"
-              (click)="
-                closeSidebarOnMobile(
-                  (isMobile$ | async) ?? false
-                )
-              "
+              (click)="closeSidebarOnMobile()"
             >
               <mat-icon matListItemIcon>
                 groups
